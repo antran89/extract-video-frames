@@ -1,6 +1,7 @@
 #include "opencv2/video/video.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
 #include "opencv2/highgui/highgui.hpp"
+#include "opencv2/core/version.hpp"
 
 #include <stdio.h>
 #include <iostream>
@@ -17,6 +18,18 @@ using namespace cv;
  */
 int main(int argc, char** argv){
     // IO operation
+#if CV_MAJOR_VERSION == 2
+    const char* keys =
+    {
+        "{ f | vidFile      | ex2.avi | filename of video }"
+        "{ i | imgFile      |<none>| filename of flow image}"
+        "{ s | step         | 1  | specify the step for frame sampling}"
+        "{ h | new_height       | 0  | new height of images and flows}"
+        "{ w | new_width        | 0  | new width of images and flows}"
+        "{ ss | start_second      | 0  | start second to extract flows}"
+        "{ es | end_second        | -1 | end second to extract flows}"
+    };
+#elif CV_MAJOR_VERSION == 3
     const char* keys =
     {
         "{ f  vidFile      | ex2.avi | filename of video }"
@@ -25,8 +38,9 @@ int main(int argc, char** argv){
         "{ h  new_height       | 0  | new height of images and flows}"
         "{ w  new_width        | 0  | new width of images and flows}"
         "{ ss start_second      | 0  | start second to extract flows}"
-        "{ es end_second        ||     end second to extract flows}"
+        "{ es end_second        | -1 | end second to extract flows}"
     };
+#endif
 
     CommandLineParser cmd(argc, argv, keys);
     string vidFile = cmd.get<string>("vidFile");
@@ -36,10 +50,10 @@ int main(int argc, char** argv){
     int new_width = cmd.get<int>("new_width");
     float start_second = cmd.get<float>("start_second");
     float end_second = cmd.get<float>("end_second");
-    bool has_end_second = cmd.has("end_second");
+    bool has_end_second = end_second >= 0;
     int start_frame, end_frame;
 
-    if (!cmd.has("imgFile")) {
+    if (imgFile.empty()) {
         cout << "There is not image file output... " << imgFile << endl;
         return -1;
     }
