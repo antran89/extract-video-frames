@@ -1,23 +1,23 @@
 #!/bin/bash
 
 SCRIPT_NAME="$0"
-if [[ $# < 2 ]]; then
+if [[ $# < 4 ]]; then
 	echo 'The arguments for the program are not correct!'
-	printf 'Usage: %s NUM_WORKERS START_CLASS_INDEX [END_CLASS_INDEX]\n' $SCRIPT_NAME
+	printf 'Usage: %s VIDEO_FOLDER IMG_FOLDER NUM_WORKERS START_CLASS_INDEX [END_CLASS_INDEX]\n' $SCRIPT_NAME
 	exit
 fi
 
 start=$(date +%s)
 
 # dataset parameters
-VIDEO_FOLDER=/media/tranlaman/8TB_DATA/ActivityNet_competition/Kinetics_video/
-IMG_FOLDER=/media/tranlaman/8TB_DATA/ActivityNet_competition/Kinetics_frame/img_folder/
+VIDEO_FOLDER=$1
+IMG_FOLDER=$2
 
 # run parameters
-NUM_WORKERS=$1
-START_CLASS_INDEX=$2
-if [[ $# == 3 ]]; then
-	END_CLASS_INDEX=$3
+NUM_WORKERS=$3
+START_CLASS_INDEX=$4
+if [[ $# == 5 ]]; then
+	END_CLASS_INDEX=$5
 else
 	END_CLASS_INDEX=400
 fi
