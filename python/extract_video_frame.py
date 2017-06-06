@@ -73,7 +73,7 @@ def main():
             
             print('Extracting flows and images of video %s' % vid)
             img_file = os.path.join(img_vid_folder, 'im')
-            cmd = '../src-build/extract_frames -f=\'%s\' -i=\'%s\' -h=%d -w=%d -s=%d' \
+            cmd = '../src-build/extract_frames -f=\"%s\" -i=\"%s\" -h=%d -w=%d -s=%d' \
             % (vid, img_file, new_height, new_width, step)
             
             os.system(cmd)
