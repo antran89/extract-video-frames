@@ -23,9 +23,7 @@ else
 fi
 
 # parameters of flows, step
-FLOW_STEP=1
-DEVICE_ID=0
-FLOW_TYPE=1  # 1 for tvl1
+STEP=1
 NEW_HEIGHT=128
 NEW_WIDTH=171
 
@@ -36,12 +34,12 @@ for i in `seq 1 $NUM_WORKERS`; do
 		then 
 		printf 'executing classes from class index %d to class index %d\n' $index $END_CLASS_INDEX
 		python extract_video_frame.py --dataset_folder=$VIDEO_FOLDER --img_folder=$IMG_FOLDER --new_height=$NEW_HEIGHT --new_width=$NEW_WIDTH \
-		--step=$FLOW_STEP --start_index=$index --end_index=$END_CLASS_INDEX --video_format=mp4 &
+		--step=$STEP --start_index=$index --end_index=$END_CLASS_INDEX --video_format=mp4 &
 		sleep 2s
 	else
 		printf 'executing classes from class index %d to class index %d\n' $index $((index + workers_step))
 		python extract_video_frame.py --dataset_folder=$VIDEO_FOLDER --img_folder=$IMG_FOLDER --new_height=$NEW_HEIGHT --new_width=$NEW_WIDTH \
-		--step=$FLOW_STEP --start_index=$index --end_index=$((index + workers_step)) --video_format=mp4 &
+		--step=$STEP --start_index=$index --end_index=$((index + workers_step)) --video_format=mp4 &
 		sleep 2s
 	fi
 	index=$(( index + workers_step ))
