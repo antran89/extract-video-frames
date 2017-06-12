@@ -93,11 +93,13 @@ def main():
             img_vid_folder = os.path.join(img_folder, file_basename)
             if not os.path.isdir(img_vid_folder):
                 os.mkdir(img_vid_folder)
+            else:
+                continue
 
             print('Extracting frames of video %s' % file_name)
             img_file = os.path.join(img_vid_folder, 'im')
 
-            cmd = '../src-build/extract_frames -f=\"%s\" -f=\"%s\" -i=\"%s\" -h=%d -w=%d -s=%d' \
+            cmd = '../src-build/extract_frames -f=\"%s\" -i=\"%s\" -h=%d -w=%d -s=%d' \
             % (vid, img_file, new_height, new_width, step)
             os.system(cmd)
             continue
@@ -107,8 +109,10 @@ def main():
             img_vid_folder = os.path.join(img_folder, '%s_seg%d' % (file_basename, cnt))
             if not os.path.isdir(img_vid_folder):
                 os.mkdir(img_vid_folder)
+            else:
+                continue
                 
-            print('Extracting frames of video %s' % file_name)
+            print('Extracting frames of video %s segment %d' % (file_name, cnt))
             img_file = os.path.join(img_vid_folder, 'im')
             
             segment = ann['segment']
