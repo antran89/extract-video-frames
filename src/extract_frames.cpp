@@ -71,7 +71,7 @@ int main(int argc, char** argv) {
         resize(org_frame, frame, new_size);
 
         char tmp[20];
-        sprintf(tmp,"_%04d.jpg",int(++result_index));
+        sprintf(tmp,"%04d.jpg",int(++result_index));
         imwrite(imgFile + tmp, frame);
 
         int step_t = step;

@@ -28,6 +28,7 @@ def parse_args():
     parser.add_argument('--end_index', dest='end_index', help='end index class to extract flows for that class', default=101,
                         type=int)
     parser.add_argument('--video_format', dest='video_format', help='video format', default='avi', type=str)
+    parser.add_argument('--image_prefix', dest='image_prefix', help='image prefix', default='im_', type=str)
     
     args = parser.parse_args()
 
@@ -43,6 +44,7 @@ def main():
     start_index = args.start_index
     end_index = args.end_index
     video_format = args.video_format
+    image_prefix = args.image_prefix
     
     if not os.path.isdir(dataset_folder):
         print('Video dataset folder is not a folder. Quitting...\n')
@@ -72,7 +74,7 @@ def main():
                 continue
             
             print('Extracting frames of video %s' % vid)
-            img_file = os.path.join(img_vid_folder, 'im')
+            img_file = os.path.join(img_vid_folder, image_prefix)
             cmd = '../src-build/extract_frames -f=\"%s\" -i=\"%s\" -h=%d -w=%d -s=%d' \
             % (vid, img_file, new_height, new_width, step)
             

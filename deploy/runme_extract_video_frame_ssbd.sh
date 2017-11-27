@@ -34,12 +34,12 @@ for i in `seq 1 $NUM_WORKERS`; do
 		then 
 		printf 'executing classes from class index %d to class index %d\n' $index $END_CLASS_INDEX
 		python extract_video_frame.py --dataset_folder=$VIDEO_FOLDER --img_folder=$IMG_FOLDER --new_height=$NEW_HEIGHT --new_width=$NEW_WIDTH \
-		--step=$STEP --start_index=$index --end_index=$END_CLASS_INDEX --video_format=avi &
+		--step=$STEP --start_index=$index --end_index=$END_CLASS_INDEX --video_format=avi --image_prefix='' &
 		sleep 2s
 	else
 		printf 'executing classes from class index %d to class index %d\n' $index $((index + workers_step))
 		python extract_video_frame.py --dataset_folder=$VIDEO_FOLDER --img_folder=$IMG_FOLDER --new_height=$NEW_HEIGHT --new_width=$NEW_WIDTH \
-		--step=$STEP --start_index=$index --end_index=$((index + workers_step)) --video_format=avi &
+		--step=$STEP --start_index=$index --end_index=$((index + workers_step)) --video_format=avi --image_prefix='' &
 		sleep 2s
 	fi
 	index=$(( index + workers_step ))
