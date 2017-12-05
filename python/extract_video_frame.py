@@ -29,6 +29,7 @@ def parse_args():
                         type=int)
     parser.add_argument('--video_format', dest='video_format', help='video format', default='avi', type=str)
     parser.add_argument('--image_prefix', dest='image_prefix', help='image prefix', default='im_', type=str)
+    parser.add_argument('--img_extension', dest='img_extension', help='image extension', default='jpg', type=str)
     
     args = parser.parse_args()
 
@@ -45,6 +46,7 @@ def main():
     end_index = args.end_index
     video_format = args.video_format
     image_prefix = args.image_prefix
+    img_extension = args.img_extension
     
     if not os.path.isdir(dataset_folder):
         print('Video dataset folder is not a folder. Quitting...\n')
@@ -57,6 +59,8 @@ def main():
     
     for ind in xrange(start_index, end_index):
         action = actions[ind]
+        if not os.path.isdir(os.path.join(dataset_folder, action)):
+            continue
         if not os.path.isdir(os.path.join(img_folder, action)):
             os.mkdir(os.path.join(img_folder, action))
         
@@ -75,8 +79,8 @@ def main():
             
             print('Extracting frames of video %s' % vid)
             img_file = os.path.join(img_vid_folder, image_prefix)
-            cmd = '../src-build/extract_frames -f=\"%s\" -i=\"%s\" -h=%d -w=%d -s=%d' \
-            % (vid, img_file, new_height, new_width, step)
+            cmd = '../src-build/extract_frames -f=\"%s\" -i=\"%s\" -h=%d -w=%d -s=%d -e=%s' \
+            % (vid, img_file, new_height, new_width, step, img_extension)
             
             os.system(cmd)
             

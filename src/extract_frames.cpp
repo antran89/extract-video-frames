@@ -24,6 +24,7 @@ int main(int argc, char** argv) {
         "{ s | step         | 1  | specify the step for frame sampling}"
         "{ h | new_height       | 0  | new height of images and flows}"
         "{ w | new_width        | 0  | new width of images and flows}"
+        "{ e | img_extension        | jpg  | image extensions}"
     };
 #elif CV_MAJOR_VERSION == 3
     const char* keys =
@@ -33,6 +34,7 @@ int main(int argc, char** argv) {
         "{ s  step         | 1  | specify the step for frame sampling}"
         "{ h  new_height       | 0  | new height of images and flows}"
         "{ w  new_width        | 0  | new width of images and flows}"
+        "{ e  img_extension    | jpg| image extensions}"
     };
 #endif
 
@@ -42,6 +44,7 @@ int main(int argc, char** argv) {
     int step = cmd.get<int>("step");
     int new_height = cmd.get<int>("new_height");
     int new_width = cmd.get<int>("new_width");
+    string img_extension = cmd.get<string>("img_extension");
 
     if (imgFile.empty()) {
         cout << "There is not image file output... " << imgFile << endl;
@@ -71,7 +74,7 @@ int main(int argc, char** argv) {
         resize(org_frame, frame, new_size);
 
         char tmp[20];
-        sprintf(tmp,"%04d.jpg",int(++result_index));
+        sprintf(tmp,"%04d.%s", int(++result_index), img_extension.c_str());
         imwrite(imgFile + tmp, frame);
 
         int step_t = step;
